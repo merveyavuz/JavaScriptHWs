@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Add Course </title>
+</head>
+
+<script>
+"use strict";
+
+function Course(Name, Midterm, Final){
+    this.n= Name;
+    this.m= Midterm;
+    this.f= Final;
+}
+
+function Add() {
+    let name = id_name.value; 
+    let midterm = Number(id_midterm.value); 
+    let final = Number(id_final.value); 
+    courses.push(new Course(name, midterm, final));
+}
+
+function Print() {
+    let printSonuc= "";
+    for (let i = 0  ; i < courses.length ; i++){
+	printSonuc += courses[i].n + " "+ courses[i].m + " "+ courses[i].f + "\n";  
+    }            
+    outA.innerText = printSonuc;
+}
+function Avg() {
+    let avgSonuc= "";
+    let ort= 0;
+    for (let i = 0  ; i < courses.length ; i++){
+        ort = (courses[i].m + courses[i].f ) / 2;
+	avgSonuc += courses[i].n + " "+ ort + "\n";  
+    }              
+    outB.innerText = avgSonuc;
+}
+
+function Max() {
+    let maxAvg= (courses[0].m + courses[0].f)/ 2; 
+    let avg; 
+    let maxName= courses[0].n;
+    for (let i = 0  ; i < courses.length ; i++){
+	avg = (courses[i].m + courses[i].f)/2;
+	if (maxAvg<avg){
+            maxAvg = avg;
+            maxName = courses[i].n;
+	}
+    }
+    outC.innerText = maxName +" "+maxAvg;  
+}
+</script>
+
+<body>
+<h2 id=title></h2>
+
+<p style="margin-bottom: 5px;"> 
+    <b style="padding-right: 22px;"> Name </b>
+<input type="text" id="id_name" value=" " >
+</p>
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+"> <b>Midterm </b>
+<input type="text" id="id_midterm" value="">
+</p>
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;"> 
+    <b style="padding-right: 25px;">
+    Final </b>
+<input type="text" id="id_final" value=" " >
+</p>
+
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+">
+<input type="button" value="Add" onclick="Add()">
+</p>
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+"></p>
+
+<input type=button value="Print"  onClick="Print()">
+<input type=button value="Avg"  onClick="Avg()">
+<input type=button value="Max"   onClick="Max()">
+</p>
+
+<hr>
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+"> <b>Name  Midterm  Final </b>
+</p>
+
+<p id=outA></p>
+<hr>
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+"> <b>Name  Average </b>
+
+<p id=outB></p>
+<hr>
+
+<p style="
+    margin-top: 5px;
+    margin-bottom: 5px;
+"> <b>Name  Max </b>
+
+<p id=outC></p>
+
+<script>
+    title.innerText = document.title;
+    const courses = [];  
+</script>
+</body>
+</html>
