@@ -2,4 +2,4 @@
 
 <a href="https://merveyavuz.github.io/JavaScriptHWs/Array%20Demo.html" rel="nofollow">CW2</a></p>
 
-2. [] (https://merveyavuz.github.io/JavaScriptHWs/HW#1.html)
+<a href="https://merveyavuz.github.io/JavaScriptHWs/HW#1.html" rel="nofollow">HW#1</a></p>
