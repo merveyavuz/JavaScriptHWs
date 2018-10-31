@@ -1,0 +1,110 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>CW#5 </title>
+</head>
+
+<script>
+"use strict";
+var texts = [];
+function hide() {
+    state.style.visibility = "hidden";
+}
+function show(v) {
+    state.value = v; state.style.visibility = "";
+}
+function report(t, n) {
+    show("OK"); setTimeout(hide, 1000);
+    out.innerText = t;
+    console.log(n? n : t);
+}
+function readText() {
+    show("FT"); // fetch text
+    fetch(url.value)
+      .then(r => r.text()) 
+      //response of fetch() is r
+      .then(t => report(t, t.length+" chars"));  
+      //response of text() is t
+}
+function readBlob() {
+    show("FB"); // fetch blob
+    fetch(url.value)
+      .then(r => r.blob())  //response r
+      .then(b => report(b.size+" bytes"));
+}
+function isText(f) {	
+    console.assert(f instanceof File);
+    return f.type.startsWith("text") || f.name.endsWith(".md")
+         || f.name.endsWith(".js") || f.name.endsWith(".java");
+}
+function Read(f){
+	var reader = new FileReader();
+	reader.onload = function(evt) { //text
+            const a = evt.target.result.replace(/</g, "&lt;");
+            out.innerHTML = "<pre>"+a+"</pre>";
+            console.log(a);
+			texts.push(a);
+			console.log(texts)
+			
+        };
+        reader.readAsText(f);
+}
+function fileSelect(t) { //target is the button
+    console.assert(t == button);
+	
+		for(let text of t.files){
+		Read(text)
+		}	
+	}
+	
+function compareInputs(){
+let str
+let counter=0;
+for(let t1 of texts){
+	counter=0
+	for(let t2 of texts){
+		if(t1==t2){
+			counter++;
+			str=t1;
+		}
+	}
+	if(sayac>1)
+		break;		
+}
+if(counter>1)
+	msg.innerText=str+" found";
+	
+else
+	msg.innerText="different ";
+}
+</script>
+
+<body>
+
+<h2 id=title></h2>
+
+<input type=text id=url value="https://maeyler.github.io/BLM305/README.md">
+<!--onChange="readText()"-->
+
+<input type=button value="text" onClick="readText()">
+<input type=button value="compare" onClick="compareInputs()">
+<input type=button value="blob" onClick="readBlob()">
+<input type=button id=state style="visibility: hidden">
+<pre id=out></pre>
+<hr />
+<pre id=msg></pre>
+<hr />
+<input type="file" id="button" onchange="fileSelect(this)"multiple>
+<pre id=sample></pre>
+
+<pre id=out2></pre>
+
+
+<script>
+    title.innerText = document.title;
+    
+</script>
+
+</body>
+</html>
