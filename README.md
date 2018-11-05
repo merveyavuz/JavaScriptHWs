@@ -1,13 +1,13 @@
 # JavaScriptHWs
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/Array%20Demo.html" rel="nofollow">CW2</a>
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/Array%20Demo.html">CW2</a></p>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/HW%231.html" rel="nofollow">HW#1</a>
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/HW%231.html">HW#1</a></p>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/inspector.html" rel="nofollow">CW3</a>
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/inspector.html">CW3</a></p>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/cw3.png" rel="nofollow">CW3(The sum of a range)
-  
-<a href="https://merveyavuz.github.io/JavaScriptHWs/index.html" rel="nofollow">CW4</a>
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/cw3.png">CW3(The sum of a range)</a></p>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/CW5.html" rel="nofollow">CW5</a>
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/index.html">CW4</a></p>
+
+    <p><a href="https://merveyavuz.github.io/JavaScriptHWs/CW5.html">CW5</a></p>
