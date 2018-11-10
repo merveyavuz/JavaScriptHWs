@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <style>
+   
+	body{
+	color: white;
+	background-image:cover;
+	background-image: url("resim.jpg");
+	text-align: center;
+	font-size:20px;
+	border-radius: 25px;
+	}
+	body .foot{	
+	width: 100%;
+	height: 15px;
+	background-color: #8FBC8F;
+	text-align: center;
+	position: fixed;
+	bottom: 0px;
+	font-family: arial;
+	font-size: 7px;
+}
+  </style>
+  
+  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+	<script src="Database.js"></script>
+    <title>Student Database </title>
+<center><p><b>STUDENT DATABASE</b></p></center>
+<script>
+"use strict";
+	var data= new Database();
+	var tbl= document.getElementById("tb1");
+	var studentList;
+	
+ function randomStudents(){	
+	tb1.innerHTML="";
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	var c2= head.insertCell(1);
+	var c3= head.insertCell(2);
+	
+	c1.innerHTML="ID: ";
+	c2.innerHTML="NAME: ";
+	c3.innerHTML="GPA: ";
+
+	var student = data.getRandomStudent();
+	var r=tb1.insertRow(1);
+	r.insertCell(0).innerHTML = student.id;
+	r.insertCell(1).innerHTML =student.name;
+	r.insertCell(2).innerHTML =student.gpa;
+}
+function aboveGPA(){
+	tb1.innerHTML= "";
+	let g= inputGpa.value;
+	let count=0;
+	for (var s of data.students.values()){
+            if(Number(g) < Number(s.gpa)) 
+                count++;
+	}
+	
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	c1.innerHTML="Above GPA Count: "+ count;
+}
+function getCourse(){
+	tb1.innerHTML="";
+	
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	c1.innerHTML="Course Code: ";
+	let s = data.students.get(inputId.value);
+	var i=1;
+	for (var c of s.courses){
+            var r=tb1.insertRow(i);
+            r.insertCell(0).innerHTML = c.code;
+            i++;
+	}
+}
+function examSchedule(){
+	tb1.innerHTML="";
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	var c2= head.insertCell(1);
+	var c3= head.insertCell(2);
+	var c4= head.insertCell(3);
+
+	c1.innerHTML="Course Code:";
+	c2.innerHTML="Course Time:";
+	c3.innerHTML="Course Date:";
+	c4.innerHTML="Course Rooms:"
+ 
+	let s = data.students.get(inputId.value);
+	var i=1;
+	for (var c of s.courses){
+            var r=tb1.insertRow(i);
+            r.insertCell(0).innerHTML = c.code;
+            r.insertCell(1).innerHTML = c.time;
+            r.insertCell(2).innerHTML = c.date;
+            r.insertCell(3).innerHTML = c.rooms;
+            i++;
+	}
+}
+function getStudents(){	
+	tb1.innerHTML="";
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	var c2= head.insertCell(1);
+	var c3= head.insertCell(2);
+	
+	c1.innerHTML="ID:";
+	c2.innerHTML="NAME:";
+	c3.innerHTML="GPA:";
+	
+	var c=data.courses.get(inputCode.value);
+	studentList = data.getStudentsFromClass(c);
+	
+	var i=1;
+	for (var s of studentList){
+            var r= tb1.insertRow(i);
+            r.insertCell(0).innerHTML = s.id;
+            r.insertCell(1).innerHTML = s.name;
+            r.insertCell(2).innerHTML = s.gpa;
+            i++;
+	}	
+}
+function getRooms(){
+	tb1.innerHTML="";
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	c1.innerHTML="Rooms:";
+	let c = data.courses.get(inputCode.value);
+	var i= 1;
+	for (var room of c.rooms){
+            var r= tb1.insertRow(i);
+            r.insertCell(0).innerHTML = room;
+            i++;
+	}
+	
+}
+
+
+function getCoursesInRoom(){
+	tb1.innerHTML="";
+	var count=0;
+	let room= inputRoom.value;
+	
+	for (var c of data.courses.values()){
+		for (var r of c.rooms){
+			if(r == room)
+			count++;
+		}
+	}
+	
+	var head=tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	c1.innerHTML= "Total number of students in course: " + count;
+}
+
+function getCourseInDate(){
+	tb1.innerHTML="";
+	var head= tb1.insertRow(0);
+	var c1= head.insertCell(0);
+	c1.innerHTML= "Course Code:";
+
+	var date= inputDate.value;
+	let courseList= [];
+	for (var c of data.courses.values()){
+		if (c.date==date){
+                    courseList.push(c);
+		}
+	}
+	var i=1;
+	for (var c of courseList){
+            var r= tb1.insertRow(i);
+            r.insertCell(0).innerHTML = c.code;
+            i++;
+	}
+	
+}
+
+function Clear(){
+	inputId.value= "";
+	inputCode.value= "";
+	inputRoom.value= "";
+	inputDate.value= "";
+	inputGpa.value= "";
+	tb1.innerHTML= "";	
+}
+
+</script>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+
+<center> <button onClick='randomStudents()'>Random Student</button>
+    <button onClick='Clear()'>Clear All</button> </center>
+
+<p><center> Student Id: 
+<input type=number id= inputId ">
+<button onClick='getCourse()'>Courses</button>
+<button onClick='examSchedule()'>Exam Schedule</button>
+</center>
+</p>
+
+<p>
+<center>
+ Course Code: 
+<input type=text id= inputCode ">
+<button onClick='getStudents()'>Students</button>
+<button onClick='getRooms()'>Rooms</button>
+</center>
+</p>
+
+<p>
+<center>
+Room: 
+<input type=text id= inputRoom ">
+<button onClick='getCoursesInRoom()'>Courses in Room</button>
+</center>
+</p>
+
+<p>
+<center>Date: 
+<input type=text id= inputDate ">
+<button onClick='getCourseInDate()'>Courses In Date</button>
+</center>
+</p>
+
+<p>
+<center>
+    GPA: 
+<input type=number id= inputGpa ">
+<button onClick='aboveGPA()'>Above GPA</button>
+</center>
+</p>
+
+<hr />
+<center>
+<table id=tb1 style="width:650px"> 
+</table></center>
+<hr />
+
+</body>
+</html>
