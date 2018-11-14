@@ -14,4 +14,4 @@
 
 <a href="https://merveyavuz.github.io/JavaScriptHWs/hw2/Database.html" rel="nofollow">HW2</a>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/hw2/timing.html" rel="nofollow">CW6</a>
+<a href="https://merveyavuz.github.io/JavaScriptHWs/timing.html" rel="nofollow">CW6</a>
