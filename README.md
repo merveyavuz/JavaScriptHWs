@@ -16,4 +16,5 @@
 
 <a href="https://merveyavuz.github.io/JavaScriptHWs/timing.html" rel="nofollow">CW6</a>
 
+<a href="https://merveyavuz.github.io/JavaScriptHWs/animate.html" rel="nofollow">HW3</a>
 
