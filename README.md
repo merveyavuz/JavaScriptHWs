@@ -18,6 +18,6 @@
 
 <a href="https://merveyavuz.github.io/JavaScriptHWs/animate.html" rel="nofollow">HW3</a>
 
-<a href="https://merveyavuz.github.io/JavaScriptHWs/cw7.html" rel="nofollow">cw7</a>
+<a href="https://merveyavuz.github.io/JavaScriptHWs/cw7.html" rel="nofollow">CW7</a>
 
 
