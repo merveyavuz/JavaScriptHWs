@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>SVG and Canvas </title>
+
+  <style>
+    svg, canvas {
+        background: #f6e4c1;
+        font: 10px arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>CW9: Using SVG</h2>
+<svg id='svg' width='500' height='200'>
+  <circle id="circle1" cx='100' cy='100' r='40'
+  style='fill:#ffffff;stroke:blue;stroke-width:4' />
+  <text id="circletxt" x='85' y='100' fill='black'>Circle</text>
+  <rect id="rect1" x='300' y='57' width='100' height='80'
+  style='fill:#ffffff;stroke:red;stroke-width:5' />
+  <text id="recttxt" x='330' y='100' fill='blue'>Rect</text>
+</svg>
+
+<hr />
+
+<p>
+<button onclick="rect1.style.stroke= 'black';">Change rectangular stroke color</button>
+</p>
+
+<p>
+<button onclick="circle1.style.stroke= 'black';">Change circle stroke color</button>
+</p>
+
+<p>Change circle color:</p>
+<input id="colorPicker" type="color" value="#ff0000">
+
+<p>
+<button onclick="radius(20);">Change circle r</button>
+</p>
+
+<p>
+<button onclick="moveRect(350);">Move rect</button>
+
+<button onclick="moveCircle(150);">Move circle</button>
+</p>
+
+
+
+
+
+<script>
+"use strict";
+
+function radius( r){
+     document.getElementById('circle1').setAttribute('r',30);
+}
+
+function moveRect( x){
+     document.getElementById('rect1').setAttribute('x',x);
+     document.getElementById('recttxt').setAttribute('x',x+30);
+}
+
+function moveCircle(x){
+     document.getElementById('circle1').setAttribute('cx',x);
+     document.getElementById('circletxt').setAttribute('x',x-8);
+}
+
+function updateFirst(event) {
+  var p = document.querySelector("p");
+
+  if (p) {
+    circle1.style.fill=event.target.value;
+  }
+}
+
+colorPicker.addEventListener("input", updateFirst, false);
+colorPicker.addEventListener("change", watchColorPicker, false);
+
+function watchColorPicker(event) {
+  document.querySelectorAll("circle1").forEach(function(circle1) {
+    circle1.style.fill=event.target.value;
+  });
+}
+
+
+</script>
+
+</body>
