@@ -22,3 +22,4 @@
 
 <a href="https://merveyavuz.github.io/JavaScriptHWs/cw9.html" rel="nofollow">CW9</a>
 
+<a href="https://merveyavuz.github.io/JavaScriptHWs/othello.html" rel="nofollow">HW4b</a>
