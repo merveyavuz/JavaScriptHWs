@@ -1,20 +1,58 @@
-<html>
-<head>
-	<title>Othello Game</title>
-    <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="othello.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
-	<script src="othello.js"></script>
-</head>
-<body>
-	<h1> Othello </h1>
+<!DOCTYPE html>
+<html lang="en" >
 
-	<table id='board'>
-		<tbody></tbody>
-	</table>
-	
-	<p id='turn-text'></p>
+<head>
+  <meta charset="UTF-8">
+  <title>Othello</title>
     
-    <button class="button" id='btn' >Reset</button>
+  <link rel="stylesheet" href="othello.css">
+</head>
+
+
+    <body background="blue.jpg" >
+    <div id="template">
+	   <div id="empty" class="cell"><div></div></div>
+	   <div id="black" class="cell"><div></div></div>
+	   <div id="white" class="cell"><div></div></div>
+    </div>
+
+    <div id="wrap">
+	   <h1>Othello</h1>
+	   <div id="board"></div>
+	   <p id="text"></p>
+	   <input  class="button"   type="button" id="reset" value="RESET" >
+        
+    </div>
+
+    <div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">References</button>
+    <div id="myDropdown" class="dropdown-content">
+        <a href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown" rel="nofollow">making menu</a>
+        <a href="https://very-chocho.ml/post-105/" rel="nofollow">check piece algorithm</a>
+        <a href="http://jsfiddle.net/YEJ9A/1/" rel="nofollow">making a board</a>
+        <a href="https://codepen.io/zitrusfrisch/pen/wvcxy" rel="nofollow">3d text effect</a>
+    </div>
+    </div>
+
+<script>
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+    <script  src="othello.js"></script>
 </body>
+
 </html>
