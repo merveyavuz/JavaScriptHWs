@@ -1,112 +1,181 @@
+var turn;
+var elements = [];
 var board = [];
-var turn = "white";
-var rows = 8;
-var columns = 8;
 
-window.onload = function(){ 
-	var boardElem = document.getElementById('board');
-	boardElem.addEventListener("click", makeMove, false);
-	makeBoard();
-};
-
-
-function index(r,c){ // elementin tahta üzerindeki indexini bulur
-	if (r<1)
-		return null;
-	if (c<1)
-		return null;
-	var arrayIndex = (r-1)*columns+c-1;
-	return arrayIndex;
+window.onload = function(){
+    makeBoard();
+    document.getElementById("reset").onclick = function(){
+        makeBoard();
+    }
 }
-
-function getRowColFromIndex(index){
-	var row = Math.ceil((index+1)/rows);
-	var col = (index+1)%columns;
-	if (col == 0)
-		col = 8;
-	return [row, col];
-}
-
-
-function getOtherPlayer(){
-	if (turn == 'white')
-		return 'black';
-	else 
-		return 'white';
-}
-
-function makeBoard(){
-	for (var i=1; i<=rows; i++){
-		$('tbody').append('<tr></tr>');
-		for (var j=1; j<=columns; j++){
-			board[index(i,j)] = null;
-			$('tbody tr:nth-child('+i+')').append('<td><div class="square"></div></td>');
-		}
-	}
     
-	board[index(4,4)]='w';
-	board[index(4,5)]='b';
-	board[index(5,4)]='b';
-	board[index(5,5)]='w';
+    
+function makeBoard(){
+   turn = 2;
+   elements = [
+       document.getElementById("empty"),
+       document.getElementById("black"),
+       document.getElementById("white")
+   ];
+		
+    for(var i = 0; i < 10; i++){ //matrisin tamamına 0 atar
+		board[i] = [];
+        for(var j = 0; j < 10; j++){
+				board[i][j] = 0;
+			}
+    }
+		
+    //baslangicta olacak taslar atanır
+	board[4][5] = 1;
+    board[5][4] = 1;
+	board[4][4] = 2;
+	board[5][5] = 2;
+    
+    //empty black ve white göre board oluşturulur 
+    var b = document.getElementById("board"); 
+    for(var y = 1; y <= 8; y++){
+			for(var x = 1; x <= 8; x++){
+				var c = elements[board[x][y]].cloneNode(true);
+				b.appendChild(c);
+			}
+		}
+	//sıranın kimde olduğunu gösterecek mesaj oluşturulur. İlk sıra her zaman beyazdan başlar.
+    text= "White's move";
+    document.getElementById("text").innerHTML = text;
+	updateBoard();
 
-	$('#turn-text').text('Turn: '+turn);
-    	updateBoard();
-	return 0;
 }
 
 function updateBoard(){
-	for (var i=1; i<=rows; i++){
-		for (var j=1; j<=columns; j++){
-			if (board[index(i,j)]=="b"){
-				$('tbody tr:nth-child('+i+') :nth-child('+j+') :nth-child(1)').html('<div class="black piece"></div>');
-			}
-			if (board[index(i,j)]=="w"){
-				$('tbody tr:nth-child('+i+') :nth-child('+j+') :nth-child(1)').html('<div class="white piece"></div>');
+    var b = document.getElementById("board"); //olan boardun tekrar ekranda oluşmaması için kaldırılır
+    while(b.firstChild){
+			b.removeChild(b.firstChild);
+    }
+    
+    for(var y = 1; y <= 8; y++){ //board oluşturulur
+        for(var x = 1; x <= 8; x++){
+            var node = elements[board[x][y]].cloneNode(true);
+            b.appendChild(node);
+                
+            if(board[x][y] == 0){ //boarddaki index boşsa tıklanması durumunda hamle yapılır
+					(function(){
+						var x2 = x, y2 = y;
+						node.onclick = function(){
+							if(checkPiece(x2, y2, true)){
+								makeMove();
+							}
+						}
+					})();
+                }
+		}
+    }
+
+}
+  
+function changeTurn(){
+	if (turn == 1)
+		turn= 2;
+	else 
+		turn= 1;
+}
+
+    
+function makeMove(){
+	changeTurn(); //hamle yapilmaya baslandigi için önce oyun sırası değiştirilir
+	var text;
+    if(turn==1){ //ekrana oyun sırası aktarılır
+        text="Black's move";
+    }else{
+        text="White's move";
+    }
+    
+	for(var x = 1; x <= 8; x++){
+		for(var y = 1; y <= 8; y++){
+			if(board[x][y] == 0 && checkPiece(x, y, false)){ //hamle geçerliyse
+				document.getElementById("text").innerHTML = text;
+				updateBoard();
+				return;
 			}
 		}
 	}
-	return 0;
+    
+    //oyuncunun oynayabilecek hamlesi yoksa oyuncu değişir
+	changeTurn();
+     
+    if(turn==1){
+        text += " pass</br> black's move";
+    }else{
+        text += " pass</br> white's move";
+    }
+    
+    var blacks = 0;
+	var whites = 0;
+	for(var x = 1; x <= 8; x++){
+		for(var y = 1; y <= 8; y++){
+			if(board[x][y] == 0 && checkPiece(x, y, false)){
+				document.getElementById("text").innerHTML = text;
+				updateBoard();
+				return;
+				}else{                    //yapılabilecek hamle kalmadıysa siyah ve beyazlar hesaplanır
+				    if(board[x][y] == 1){
+					blacks++;
+				}
+				if(board[x][y] == 2){
+					whites++;
+				}
+			}
+		}
+	}      
+    checkGameOver(blacks,whites);
 }
 
-
-function makeMove(e){
-    var x = e.clientX;
-    var y = e.clientY;
-    var validMove = false;
-
-    var elementClicked = document.elementFromPoint(x, y);
-    var index = $('.square').index(elementClicked);
-
-    var square = getRowColFromIndex(index);
-    var row = square[0];
-    var col = square[1];
-
-    if (board[index]!= null){
+function checkGameOver(blacks,whites) {
+	text = "Black: " + blacks + " - White: " + whites + "</br>";
+    if (blacks < whites){
+        text += "WHITE WON";
+	}else if(blacks > whites){
+        text += "BLACK WON";   
+    }else{                  
+        text += "DRAW";   
     }
-    else{
-
-    	if (isValid(row,col))
-    		validMove = true;
-    	
-        
-    	//if (validMove){
-    		board[index]=turn;
-    		updateBoard();
-    		turn = getOtherPlayer();
-    		$('#turn-text').text('Turn: '+turn);
-    	//}
-    	//else{
-    	//	alert('Invalid move!')
-    	//}
-        
-        
-    }
+    document.getElementById("text").innerHTML = text;
+    showBoard(); 
 }
-function isValid(row, col){
+
+    
+function checkPiece(x, y, flip){ //gelen taşın etrafındaki alanları kontrol eder siyahsa 2 beyazsa 1 döndürür
+    var ret = 0;
+	for(var dx = -1; dx <= 1; dx++){
+		for(var dy = -1; dy <= 1; dy++){
+			if(dx == 0 && dy == 0){
+				continue;
+			}
+			var nx = x + dx, ny = y + dy, n = 0;
+			while(board[nx][ny] == 3 - turn){
+				n++;
+				nx += dx;
+				ny += dy;
+			}
+			if(n > 0 && board[nx][ny] == turn){
+				ret += n;
+				if(flip){
+					nx = x + dx;
+					ny = y + dy;
+					while(board[nx][ny] == 3 - turn){
+						board[nx][ny] = turn;
+						nx += dx;
+						ny += dy;
+					}
+					board[x][y] = turn;
+				}
+			}
+		}
+	}
+	return ret;
     
 }
+    
 
-function reset(){
-    makeBoard();
-}
-
+    
+    
+	
