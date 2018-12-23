@@ -139,7 +139,7 @@ function checkGameOver(blacks,whites) {
         text += "DRAW";   
     }
     document.getElementById("text").innerHTML = text;
-    showBoard(); 
+    updateBoard(); 
 }
 
     
